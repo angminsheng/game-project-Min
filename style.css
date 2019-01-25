@@ -3,18 +3,272 @@
   padding: 0;
 }
 
-#game-board {
+body {
   display: flex;
   justify-content: center;
-  flex-direction: column;
   align-items: center;
-  /* background-color: #f4f4f4 */
 }
 
-canvas{
-  border: 5px solid black;
+#game-board {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
+
+.box {
+  width: 700px;
+  height: 700px;
+  background-image: url('https://media.giphy.com/media/12cLVPNexlmzNm/giphy.gif');
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 
 body {
 background-color: black;
+}
+
+.game-title {
+  margin-top: 150px;
+  font-family: 'Righteous', cursive;
+  font-size: 75px;
+  color: black;
+}
+
+#bounce {
+  animation-name: moveInLeft;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  /* color: #28b485; */
+}
+
+#pounce {
+  animation: moveInRight 1.5s ease-out;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  /* color: #28b485; */
+}
+
+@keyframes moveInLeft {
+  0% {
+      opacity: 0;
+      transform: translateX(-100px);
+  }
+
+  80% {
+    transform: translateX(10px);
+  }
+
+  100% {
+      opacity: 1;
+      transform: translate(0);
+  }
+}
+
+@keyframes moveInRight {
+  0% {
+      opacity: 0;
+      transform: translateX(100px);
+  }
+
+  80% {
+    transform: translateX(-10px);
+  }
+
+  100% {
+      opacity: 1;
+      transform: translate(0);
+  }
+}
+
+
+
+/* .btn {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.7;
+  color: red;
+  padding: 25px 50px;
+  border-radius: 10px;
+  outline: none;
+  text-transform: uppercase;
+  margin-top: 30px;
+
+} */
+
+.btn:link,
+.btn:visited {
+  font-size: 20px;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 40px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all .2s;
+  position: relative;
+  color: grey;
+  margin-top: 100px;
+ 
+}
+
+.btn-animated {
+  animation: moveInBottom .5s ease-out .75s; 
+  animation-fill-mode: backwards;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.2);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.btn-white{
+  background-color: #fff;
+  color: #777;
+}
+
+.btn::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* the z-index defines the position of element if they are on top of one another */
+  z-index: -1;
+  transition: all .4s;
+
+}
+
+.btn-white::after {
+  background-color: #fff;
+}
+
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+#start-game-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.instruction{
+  font-family: 'Play', sans-serif;
+  font-size: 30px;
+  text-align: center;
+  padding: 0 40px;
+}
+
+#restart {
+  font-family: 'Play', sans-serif;
+  color: white;
+  font-size: 28px;
+  text-decoration: none;
+  position: absolute;
+  right: 295px;
+  opacity : 0;
+
+  /* top: 1000px; */
+ 
+}
+
+/* #restart:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.2);
+}
+
+#restart:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+} */
+
+/* #restart:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+#restart::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* the z-index defines the position of element if they are on top of one another */
+  /* z-index: -1;
+  transition: all .5s; */
+
+
+
+#canvas2 {
+  
+  position: absolute;
+  right: -290px;
+  display: none;
+}
+
+#canvas3 {
+  
+  position: absolute;
+  right: 800px;
+  display: none;
+}
+
+#canvas1{
+  border: 5px solid black;
+  display: none;
+}
+
+
+@keyframes delayRestart{
+  0% {
+      opacity: 0;
+      
+    
+  }
+
+  50% {
+      opacity: 0.5;
+  
+  }
+
+  100% {
+      opacity: 1;
+     
+  
+  }
+}
+
+.delay{
+  animation: delayRestart 1.5s ease-out 1.5s;
+  animation-fill-mode: forwards;
 }

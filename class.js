@@ -9,6 +9,7 @@ class Ball {
     this.color = color
     this.vx = vx
     this.vy = vy
+    this.gameOver = 'false'
   }
 
   draw(ctx) {
@@ -29,29 +30,61 @@ class Ball {
   }
 
   update() {
-    this.x += this.vx
-    this.y += this.vy
+    if (this.gameOver == 'false') {
+      this.x += this.vx
+      this.y += this.vy
+    }
+    else {
+      this.vy = this.vy + 0.3
+      this.y += this.vy
+    }
+
   }
 
   collisionWithWall(width, height) {
-    if (this.y + this.radius > height || this.y - this.radius < 0) {
-      this.vy *= -1
-    }
-    if (this.x + this.radius > width || this.x - this.radius < 0) {
-      this.vx *= -1
+    if (this.gameOver == 'false') {
+      if (this.y + this.radius > height || this.y - this.radius < 0) {
+        this.vy *= -1
+      }
+      if (this.x + this.radius > width || this.x - this.radius < 0) {
+        this.vx *= -1
+      }
     }
   }
 
   collisionWithObject(array) {
-    for (var i = 0; i < array.length; i++) {
-      var distance = Math.sqrt((this.x - array[i].x) ** 2 + (this.y - array[i].y) ** 2)
-      if (distance < this.radius + array[i].radius) {
-        this.vx *= -1
-        this.vy *= -1
-        array[i].vx *= -1
-        array[i].vy *= -1
+    if (this.gameOver == 'false') {
+      for (var i = 0; i < array.length; i++) {
+        if (array[i].gameOver == 'false')
+          var distance = Math.sqrt((this.x - array[i].x) ** 2 + (this.y - array[i].y) ** 2)
+        if (distance < this.radius + array[i].radius) {
+          this.vx *= -1
+          this.vy *= -1
+          array[i].vx *= -1
+          array[i].vy *= -1
+        }
+      }
+    }
+  }
+
+  speedUpdate(playerArray) {
+
+    if (playerArray[0].point != 0 && this.gameOver == 'false') {
+      if (this.vx > 0) {
+        this.vx = 2.5 + Math.floor(playerArray[0].point / 5) * 0.25
+
+      } else {
+        this.vx = (2.5 + Math.floor(playerArray[0].point / 5) * 0.25) * -1
+
       }
 
+      if (this.vy > 0) {
+        this.vy = 2 + Math.floor(playerArray[0].point / 5) * 0.25
+
+      } else {
+        this.vy = (2 + Math.floor(playerArray[0].point / 5) * 0.25) * -1
+
+      }
     }
   }
 
@@ -66,12 +99,13 @@ class Player {
     this.y = y
     this.radius = radius
     this.color = '#DCDCDC'
-    this.speed = 5
     this.angle = 0
     this.vAngle = 0
     this.point = 0
-    this.health = 3
+    this.speed = 5 + Math.floor(this.point / 5) * 0.25
+    this.health = 5
     this.gameOver = 'false'
+    this.justCollide = 'false'
   }
 
   draw(ctx) {
@@ -114,19 +148,29 @@ class Player {
   }
 
   collisionWithObject(array) {
-    for (var i = 0; i < array.length; i++) {
-      var distance = Math.sqrt((this.x - array[i].x) ** 2 + (this.y - array[i].y) ** 2)
-      if (distance < this.radius + array[i].radius) {
-        this.speed *= -1
-        array[i].vx *= -1
-        array[i].vy *= -1
+    if (this.gameOver == 'false') {
+      for (var i = 0; i < array.length; i++) {
+        var distance = Math.sqrt((this.x - array[i].x) ** 2 + (this.y - array[i].y) ** 2)
+        if (distance < this.radius + array[i].radius) {
+          this.speed *= -1
+          array[i].vx *= -1
+          array[i].vy *= -1
 
-        if (this.color == array[i].color) {
-          this.point++
-          console.log('point' + this.point)
-        } else {
-          this.health--
-          console.log('health' + this.health)
+          if (this.color == array[i].color) {
+            this.point++
+            console.log('point' + this.point)
+            if (this.point % 5 != 0) {
+              pointSound.play()
+            } else {
+              levelSound.play()
+            }
+
+          } else {
+            this.health--
+            console.log('health' + this.health)
+            crashSound.play()
+          }
+
         }
       }
     }
@@ -135,12 +179,27 @@ class Player {
     if (this.gameOver == 'false') {
       if (this.y + this.radius > height || this.y - this.radius < 0) {
         this.speed *= -1
+        bounceSound.play()
       }
       if (this.x + this.radius > width || this.x - this.radius < 0) {
         this.speed *= -1
+        bounceSound.play()
       }
+
     }
   }
+
+  // collisionWithPlayer(array) {
+  //   if (this.gameOver == 'false') {
+  //     for (var i = 0; i < array.length; i++) {
+  //       var distance = Math.sqrt((this.x - array[i].x) ** 2 + (this.y - array[i].y) ** 2)
+  //       if (distance < this.radius + array[i].radius) {
+  //         this.speed *= -1
+  //         array[i].speed *= -1
+  //       }
+  //     }
+  //   }
+  // }
 
   gameOverCheck() {
     if (this.health <= 0) {

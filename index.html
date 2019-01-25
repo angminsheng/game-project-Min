@@ -6,16 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Play|Righteous" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Baloo+Thambi" rel="stylesheet">
   <title>Document</title>
 </head>
 
 <body>
 
   <div id="game-board">
-    <h1>RGB</h1>
-    <canvas width="700" height="700"></canvas>
-  </div>
+    <div class="box">
+      <div class="game-title">
+        <div id="bounce">bounce n</div>
+        <div id="pounce">pounce</div>
+        <div id="start-game">
+          <a href="#" id="start-game-btn" class="btn btn-white btn-animated">Start</a></div>
+      </div>
 
+    </div>
+    <canvas width="700" height="700" id="canvas1"></canvas>
+    <canvas width="200" height="200" id="canvas2"></canvas>
+    <canvas width="200" height="200" id="canvas3"></canvas>
+    <a href="#" id="restart">RESTART</a>
+
+
+  </div>
+  <audio src="sounds/zapsplat_multimedia_game_collect_point_004_24876.mp3" id="background123"></audio>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
   <script src="class.js"></script>
   <script src="main.js"></script>
 </body>
