@@ -17,15 +17,23 @@ backgroundSound.load()
 var startSound = new Audio('sounds/music_zapsplat_above_the_clouds_100/music_zapsplat_above_the_clouds_100.ogg')
 startSound.load()
 
+var startButtonSound = new Audio('sounds/zapsplat_magic_wand_ping_001_12529.ogg')
+startButtonSound.load()
+
 var levelSound = new Audio('sounds/lesser_vibes_Impacts_and_Hits_Exploding_Fairy_01_061.ogg')
 
-backgroundSound.play()
+
+ backgroundSound.play()
+
 backgroundSound.loop = true
+
+
 /**********************
 Start button and instruction animation
  **********************/
 $("#start-game-btn").click(function () {
 
+  startButtonSound.play()
 
   $('.box').html('<span class="instruction">The goal is simple</span>')
   setTimeout(function () {
@@ -35,21 +43,21 @@ $("#start-game-btn").click(function () {
   setTimeout(function () {
     $('.box').html('<span class="instruction">Stay in the middle for a short time to change your color</span>')
     // restart()
-  }, 4000)
+  }, 5000)
 
   setTimeout(function () {
-    $('.box').html('<span class="instruction">Use left and right button to BOUNCE around</span>')
+    $('.box').html('<span class="instruction">Use <strong>left</strong> and <strong>right</strong> button to <strong>BOUNCE</strong> around</span>')
     // restart()
-  }, 7000)
+  }, 8500)
 
   setTimeout(function () {
-    $('.box').html('<span class="instruction">POUNCE on the ball with the same color as the background to earn point.</span>')
+    $('.box').html('<span class="instruction"><strong>POUNCE</strong> on the ball with the same color as the background to earn point.</span>')
     // restart()
-  }, 11000)
+  }, 12500)
 
   setTimeout(function () {
     $('.box').html('<span class="instruction">Ready?</span>')
-  }, 15000)
+  }, 17500)
 
   setTimeout(function () {
     $('#game-board').find('.box').remove()
@@ -62,19 +70,20 @@ $("#start-game-btn").click(function () {
     backgroundSound.pause()
     start()
 
-  }, 17000)
+  }, 19000)
 });
 
 /**********************
   Restart button
   **********************/
 function start(){
+  startButtonSound.play()
 startSound.play()
 startSound.loop = true
 
 $('#restart').click(function () {
   restart()
-  
+  startButtonSound.play()
   $('#restart').removeClass('delay')
   startSound.play()
   gameOverSound.pause()
@@ -398,11 +407,12 @@ document.onkeydown = function (e) {
 
     case 13:
       restart()
+      startButtonSound.play()
       $('#restart').removeClass('delay')
       startSound.play()
       gameOverSound.pause()
       gameOverSound.currentTime = 0
-      break
+
     // case 65: // A
     //   playerArray[1].vAngle = -0.08
     //   break
